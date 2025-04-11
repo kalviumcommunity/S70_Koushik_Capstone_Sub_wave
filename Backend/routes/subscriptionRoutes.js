@@ -11,6 +11,8 @@ router.get('/', getSubscriptions);
 
 
 router.post('/', addSubscription);
+
+// Update subscription
 router.put('/:id', updateSubscription);
 router.delete('/:id', deleteSubscription);
 

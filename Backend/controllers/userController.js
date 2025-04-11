@@ -12,7 +12,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-
+// Update user profile
 const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
