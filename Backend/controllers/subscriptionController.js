@@ -12,6 +12,8 @@ exports.addSubscription = async (req, res) => {
   res.status(201).json(newSub);
 };
 
+
+//update Subscription
 exports.updateSubscription = async (req, res) => {
   const updated = await Subscription.findOneAndUpdate(
     { _id: req.params.id, userId: req.user._id },
