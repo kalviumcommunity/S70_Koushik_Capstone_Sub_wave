@@ -5,14 +5,9 @@ const subscriptionSchema = new mongoose.Schema({
   name: String,
   category: String,
   price: Number,
-  billingCycle: 
-  { type: String,
-    enum: ['Monthly', 'Yearly', 'Custom']
-   },
+  billingCycle: { type: String, enum: ['Monthly', 'Yearly', 'Custom'] },
   nextBillingDate: Date,
   autoRenewal: Boolean
-},
-
-{ timestamps: true });
+}, { timestamps: true });
 
 module.exports = mongoose.model('Subscription', subscriptionSchema);

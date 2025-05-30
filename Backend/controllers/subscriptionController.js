@@ -1,8 +1,6 @@
 const Subscription = require('../models/Subscription');
 
-
-
-exports.getSubscriptions = async (req, res) => {   
+exports.getSubscriptions = async (req, res) => {
   const subs = await Subscription.find({ userId: req.user._id });
   res.json(subs);
 };
@@ -12,8 +10,6 @@ exports.addSubscription = async (req, res) => {
   res.status(201).json(newSub);
 };
 
-
-//update Subscription
 exports.updateSubscription = async (req, res) => {
   const updated = await Subscription.findOneAndUpdate(
     { _id: req.params.id, userId: req.user._id },
