@@ -1,6 +1,5 @@
 const User = require('../models/User');
 
-
 const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password'); // remove password
@@ -48,6 +47,7 @@ const getAllUsers = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
 
 module.exports = {
   getUserProfile,
