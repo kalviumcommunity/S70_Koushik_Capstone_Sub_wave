@@ -2,7 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import axios from 'axios';
 import subwaveImage from './assets/subwave-image.png'; // Use updated image name without space
-import Header from './components/Header';
+
 
 function App() {
   const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-      <Header />
+  
 
       <div className="flex min-h-screen">
         {/* Left Section */}
