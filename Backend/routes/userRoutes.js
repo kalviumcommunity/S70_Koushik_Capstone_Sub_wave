@@ -1,17 +1,20 @@
 const express = require('express');
+const {
+  getUserProfile,
+  updateUserProfile,
+  deleteUser,
+  getAllUsers,
+} = require('../controllers/userController');
+const protect = require('../middleware/authMiddleware');
+
 const router = express.Router();
-const {getUserProfile,updateUserProfile, getAllUsers} = require('../controllers/userController');
 
+// Protected Routes
+router.get('/profile', protect, getUserProfile);
+router.put('/profile', protect, updateUserProfile);
+router.delete('/profile', protect, deleteUser);
 
-// const verifyToken = require('../middleware/authMiddleware');
-
-router.get('/profile', getUserProfile);
-
-
-//Update user profile
-router.put('/profile', updateUserProfile);
-
-
-router.get('/all', getAllUsers);
+// Admin-level route (if needed)
+router.get('/all', protect, getAllUsers);
 
 module.exports = router;

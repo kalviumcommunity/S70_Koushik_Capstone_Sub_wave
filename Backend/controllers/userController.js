@@ -1,29 +1,27 @@
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
+// Get Logged-in User Profile
 const getUserProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password'); // remove password
+    const user = await User.findById(req.user.id).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
-
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ message: 'Server Error' });
   }
 };
 
-//  Update user profiles 
-
+// Update User Profile
 const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
 
     if (req.body.password) {
-      const bcrypt = require('bcryptjs');
       user.password = await bcrypt.hash(req.body.password, 10);
     }
 
@@ -40,6 +38,18 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+// Delete User
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+// Get All Users
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -49,9 +59,9 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getUserProfile,
   updateUserProfile,
+  deleteUser,
   getAllUsers,
 };

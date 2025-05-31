@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectdb = require('./config/db');
-const authRoutes = require('./routes/authRoutes');  // ✅ Import your auth routes
-const userRoutes = require('./routes/userRoutes');  // ✅ (if needed)
-
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -15,20 +14,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use('/api/auth', authRoutes);  // ✅ Attach your API routes here
-app.use('/api/users', userRoutes); // ✅ If you have userRoutes
-
-
+// Base route
 app.get('/', (req, res) => {
-  res.send('SubWave API is running ');
+  res.send('SubWave API is running');
 });
 
-// Connect Database and Start Server
-connectdb()
+// Routes
+app.use('/api/auth', authRoutes);  // login, register
+app.use('/api/auth', userRoutes);  // profile, update, delete, all users
+
+// Connect to DB and start server
+ connectdb()
   .then(() => {
-    app.listen(process.env.PORT || 5000, () => {
-      console.log('Server started on port', process.env.PORT || 5000);
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
     });
   })
   .catch(err => {
