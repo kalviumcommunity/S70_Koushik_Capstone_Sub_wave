@@ -13,8 +13,8 @@ exports.register = async (req, res) => {
     const token = generateToken(user);
     res.status(201).json({ user, token });
   } catch (err) {
-    res.status(400).json({ message: 'Registration failed' });
-  }
+    res.status(400).json({ message: 'Registration failed', });
+  }                                                                                                                               
 };
 
 
