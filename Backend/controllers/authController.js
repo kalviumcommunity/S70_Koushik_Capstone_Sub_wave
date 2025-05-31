@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const generateToken = user =>
   jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '150d' });
 
+
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -15,6 +16,7 @@ exports.register = async (req, res) => {
     res.status(400).json({ message: 'Registration failed' });
   }
 };
+
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;

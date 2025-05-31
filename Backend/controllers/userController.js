@@ -11,7 +11,8 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// Update user profile
+//  Update user profiles 
+
 const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
