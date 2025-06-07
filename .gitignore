@@ -1,1 +1,26 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Build files
+/Frontend/dist
+/Frontend/.vite
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

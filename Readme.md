@@ -1,118 +1,133 @@
-# SubWave - Digital Subscription Manager
+# SubWave - Subscription Management Application
 
-## Project Overview
-SubWave is a full-stack web application designed to streamline the management of recurring subscriptions. Built using the MERN stack (MongoDB, Express.js, React.js, Node.js), it helps users track, manage, and optimize their subscriptions efficiently.
+SubWave is a modern web application designed to help users manage their subscriptions, track expenses, and share subscriptions with others. Built with React and Material-UI, it provides a clean and intuitive interface for managing all your digital subscriptions in one place.
 
-With a user-friendly dashboard, the platform offers real-time insights into active subscriptions, renewal dates, associated costs, and budgeting trends. Leveraging data analytics and smart notifications, SubWave ensures users stay informed about their financial commitments while assisting in making cost-effective decisions.
+## Features
 
----
-## Key Features
-### 1. Authentication & Security
-- **User Authentication:** Google Sign-In, Email, and Password authentication
-- **Two-Factor Authentication (2FA):** Secure login via Google Authenticator or OTP verification
-- **Secure Session Management:** Cookie-based authentication for secure logins
-- **Logout & Session Termination:** Ensures data privacy and session control
-- **Role-Based Access Control (RBAC):** Assign roles like Owner, Admin, and Member
-- **Custom Permissions:** Granular access control for managing roles and data
+- **Dashboard Overview**: Get a quick glance at your total subscriptions, monthly spending, and upcoming renewals
+- **Subscription Management**: Add, edit, and track all your subscriptions in one place
+- **Budget Tracking**: Set budgets and monitor your subscription spending
+- **Notification System**: Get alerts for upcoming renewals, price changes, and payment due dates
+- **Subscription Sharing**: Share subscriptions with family and friends, manage access and roles
+- **User Settings**: Customize your profile, notification preferences, and security settings
+- **Admin Panel**: Manage users and monitor system activity (admin users only)
+- **Help & Support**: Access FAQs, documentation, and contact support
 
-### 2. Subscription Management & Organization
-- **Manage Multiple Subscriptions:** Add, edit, and categorize subscriptions
-- **Subscription Sharing:** Invite family/team members to shared subscriptions
-- **Billing Cycle Management:** Monthly, yearly, or custom subscription cycles
-- **Auto-Renewal Tracking:** Monitor automatically renewing subscriptions
-- **Subscription Reminders & Alerts:** Receive renewal notifications
-- **Cancellation Tracking:** Mark and manage canceled or paused subscriptions
-- **Custom Tags & Categories:** Organize subscriptions based on type (Streaming, Productivity, Finance, etc.)
-
-### 3. Expense Tracking & Budgeting
-- **Spending Insights & Analytics:** Visual reports on subscription expenses
-- **AI-Based Budgeting Suggestions:** Personalized recommendations for cost savings
-- **Expense Breakdown by Category:** Identify where money is being spent
-- **Payment Method Tracking:** Associate subscriptions with credit cards or wallets
-- **Recurring Payment Logs:** Track past payments and upcoming charges
-
-### 4. Notifications & Alerts
-- **Automated Renewal Reminders:** Email and in-app notifications for upcoming renewals
-- **Smart Alerts for Unused Subscriptions:** AI-based suggestions for inactive subscriptions
-- **Push Notifications & Email Reports:** Weekly or monthly spending reports
-
-### 5. Collaboration & Multi-User Support
-- **Subscription Sharing with Family/Teams:** Manage subscriptions collectively
-- **Role-Based Subscription Access:** Control who can view or edit shared subscriptions
-- **Activity Logs & Change History:** Track modifications to subscription details
-
----
 ## Tech Stack
-- **Frontend:** React.js (with Tailwind/CSS for UI)
-- **Backend:** Node.js & Express.js (RESTful APIs)
-- **Database:** MongoDB (to store user & subscription data)
-- **Authentication:** JWT & OAuth (Google Sign-in)
-- **Notifications:** Nodemailer for email alerts
-- **Hosting:**
-  - **Frontend:** Netlify/Vercel
-  - **Backend:** Heroku/Render
 
----
-## Development Timeline
-### **Week 1: Project Planning & Backend Development**
-#### Day 1-2: Project Idea & Setup
-- Define project scope & objectives
-- Create wireframes (Figma)
-- Set up GitHub repository & task management (GitHub Projects)
+- **Frontend**:
+  - React 18
+  - Material-UI v5
+  - React Router v6
+  - Chart.js for data visualization
+  - Axios for API requests
 
-#### Day 3-4: Backend Initialization & API Development
-- Set up Node.js & Express.js project
-- Define MongoDB schema & create models
+- **Backend**:
+  - Node.js
+  - Express.js
+  - MongoDB
+  - JWT for authentication
 
-#### Day 5-7: CRUD APIs & Authentication
-- Implement GET, POST, PUT APIs for subscriptions
-- Implement JWT-based authentication
-- Deploy backend server (Render/Heroku)
+## Getting Started
 
----
-### **Week 2: Frontend Development**
-#### Day 8-9: UI/UX Design in Figma
-- Create high-fidelity UI design
+### Prerequisites
 
-#### Day 10-11: React.js Frontend Setup
-- Initialize React.js application
-- Setup project structure with components, routing, and state management
-- Deploy initial frontend version (Netlify/Vercel)
+- Node.js (v14 or higher)
+- npm or yarn
+- MongoDB (for backend)
 
-#### Day 12-14: Develop Core Frontend & API Integration
-- Implement UI for authentication
-- Develop subscription dashboard UI
-- Implement API calls using Axios
+### Installation
 
----
-### **Week 3: Features, Enhancements & Proof of Work**
-#### Day 15-16: Enhancing Subscription Management
-- Implement update and delete functionalities
-- Establish user-subscription relationships in the database
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/subwave.git
+   cd subwave
+   ```
 
-#### Day 17-18: Notifications & File Uploads
-- Implement email notifications (Nodemailer)
-- Enable file upload for invoices/receipts
+2. Install Frontend dependencies:
+   ```bash
+   cd Frontend
+   npm install
+   ```
 
-#### Day 19-20: OAuth & Third-Party Authentication
-- Integrate Google OAuth for authentication
+3. Install Backend dependencies:
+   ```bash
+   cd Backend
+   npm install
+   ```
 
----
-### **Week 4: Testing, Deployment & Final Deliverables**
-#### Day 21-22: Testing & API Validation
-- Perform API testing using Postman
-- Conduct unit testing (Jest, Mocha)
-- Fix UI/UX inconsistencies
+4. Set up environment variables:
+   Create a `.env` file in the Backend directory with the following variables:
+   ```
+   PORT=5000
+   MONGODB_URI=your_mongodb_uri
+   JWT_SECRET=your_jwt_secret
+   EMAIL_USER=your_email
+   EMAIL_PASSWORD=your_email_password
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   ```
 
-#### Day 23-24: Final Deployment & Hosting
-- Deploy fully functional frontend & backend
-- Configure MongoDB Atlas for production
+5. Start the development servers:
+   
+   Frontend:
+   ```bash
+   cd Frontend
+   npm run dev
+   ```
 
-#### Day 25-26: Documentation & Proof Submission
-- Write API documentation using Swagger/Postman
+   Backend:
+   ```bash
+   cd Backend
+   npm run dev
+   ```
 
-#### Day 27-28: Project Review & Final Presentation
-- Perform final testing & debugging
-- Prepare project presentation & demo video
+## Project Structure
 
+```
+subwave/
+├── Frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── assets/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── public/
+│   └── package.json
+├── Backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   └── server.js
+└── README.md
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Material-UI for the awesome component library
+- The React team for the amazing framework
+- All contributors who have helped shape this project
+
+## Contact
+
+Your Name - your.email@example.com
+Project Link: https://github.com/yourusername/subwave
+
+# Frontend deploy link
+
+Render.com: https://s70-koushik-capstone-sub-wave.onrender.com
 
