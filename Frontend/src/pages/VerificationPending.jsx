@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SubwaveImage from '../assets/Subwave-image.png';
-import axios from 'axios';
+import { auth } from '../services/api';
 
 const VerificationPending = () => {
   const location = useLocation();
@@ -37,13 +37,13 @@ const VerificationPending = () => {
       if (email && !isVerified) {
         intervalId = setInterval(async () => {
           try {
-            const response = await axios.post('/api/auth/check-verification', { email });
+            const response = await auth.checkVerification(email);
             if (response.data.isVerified) {
               setIsVerified(true);
               clearInterval(intervalId);
-              // Redirect to signin after 3 seconds
+              // Redirect to login after 3 seconds
               setTimeout(() => {
-                navigate('/signin', {
+                navigate('/login', {
                   state: { 
                     message: 'Email verified successfully! You can now sign in.',
                     verified: true

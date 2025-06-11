@@ -20,7 +20,7 @@ const Sidebar = () => {
     { path: '/budget', label: 'Budget', icon: BudgetIcon },
     { path: '/notifications', label: 'Notifications', icon: NotificationIcon },
     { path: '/settings', label: 'Settings', icon: SettingsIcon },
-    { path: '/help-support', label: 'Help & Support', icon: HelpIcon },
+    { path: '/help', label: 'Help & Support', icon: HelpIcon },
   ];
 
   const handleLogout = () => {
@@ -30,8 +30,8 @@ const Sidebar = () => {
     localStorage.removeItem('userAvatar');
     localStorage.removeItem('userName');
     
-    // Redirect to signin page
-    navigate('/signin');
+    // Redirect to login page
+    navigate('/login');
   };
 
   return (

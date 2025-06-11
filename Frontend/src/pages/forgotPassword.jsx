@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { auth } from '../services/api';
 import SubwaveImage from '../assets/Subwave-image.png';
 
 const ForgotPassword = () => {
@@ -17,7 +17,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      await auth.forgotPassword(email);
       setStatus('success');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to process request');
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
               If an account exists with this email, you will receive password reset instructions.
             </p>
             <button
-              onClick={() => navigate('/signin')}
+              onClick={() => navigate('/login')}
               className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md transition duration-300"
             >
               Back to Sign In
@@ -76,7 +76,7 @@ const ForgotPassword = () => {
             <p className="text-center text-sm text-gray-600 mt-4">
               Remember your password?{' '}
               <span
-                onClick={() => navigate('/signin')}
+                onClick={() => navigate('/login')}
                 className="text-indigo-700 cursor-pointer font-medium"
               >
                 Sign In

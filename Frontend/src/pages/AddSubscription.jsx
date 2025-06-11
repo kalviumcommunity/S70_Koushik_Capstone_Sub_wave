@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import axios from 'axios';
+import { subscriptions } from '../services/api';
 
 const AddSubscription = () => {
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ const AddSubscription = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/subscriptions', formData);
+      await subscriptions.add(formData);
       navigate('/dashboard');
     } catch (error) {
       console.error('Error adding subscription:', error);
@@ -49,9 +48,7 @@ const AddSubscription = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Sidebar />
-      
-      <div className="ml-64 p-8">
+      <div className="p-8">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-2xl font-bold text-gray-800 mb-8">Add new subscription</h1>
           

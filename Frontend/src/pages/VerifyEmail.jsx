@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { auth } from '../services/api';
 import { motion } from 'framer-motion';
 import SubwaveImage from '../assets/Subwave-image.png';
 
@@ -18,7 +18,7 @@ const VerifyEmail = () => {
           return;
         }
 
-        const response = await axios.get(`/api/auth/verify-email/${token}`);
+        const response = await auth.verifyEmail(token);
         
         if (response.data.expired) {
           setStatus('expired');
@@ -26,7 +26,7 @@ const VerifyEmail = () => {
           setStatus('success');
           // Show success message for 3 seconds before redirecting
           setTimeout(() => {
-            navigate('/signin', {
+            navigate('/login', {
               state: { 
                 message: 'Registration successful! Your email has been verified. Please sign in to continue.',
                 verified: true

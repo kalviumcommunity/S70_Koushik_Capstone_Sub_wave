@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import axios from 'axios';
+import { subscriptions } from '../services/api';
 import DashboardIcon from '../assets/Dashboard.png.jpg';
 
 const Dashboard = () => {
-  const [subscriptions, setSubscriptions] = useState([]);
+  const [subscriptionsData, setSubscriptionsData] = useState([]);
   const [totalSpending, setTotalSpending] = useState(0);
   const [upcomingRenewals, setUpcomingRenewals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     // Fetch subscriptions data
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/subscriptions');
-        setSubscriptions(response.data);
+        setLoading(true);
+        console.log('Dashboard mounted: Fetching subscriptions...');
+        const response = await subscriptions.getAll();
+        setSubscriptionsData(response.data);
         
         // Calculate total spending
         const total = response.data.reduce((acc, sub) => acc + sub.amount, 0);
@@ -33,17 +36,41 @@ const Dashboard = () => {
         setUpcomingRenewals(upcoming);
       } catch (error) {
         console.error('Error fetching data:', error);
+        if (error && error.response) {
+          console.error('API error response:', error.response);
+        } else if (error && error.request) {
+          console.error('API error request:', error.request);
+        } else {
+          console.error('API error message:', error.message);
+        }
+        setError('Failed to load dashboard data');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg text-gray-600">Loading dashboard...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg text-red-600">{error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-500">
-      <Sidebar />
-      
-      <div className="ml-64 p-8">
+      <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center space-x-3">
             <img src={DashboardIcon} alt="Dashboard" className="w-8 h-8 object-contain" />
@@ -61,7 +88,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-3 gap-6 mb-8">
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg">
             <h3 className="text-sm font-medium text-white/80 mb-1">Total subscriptions</h3>
-            <p className="text-2xl font-bold text-white">{subscriptions.length}</p>
+            <p className="text-2xl font-bold text-white">{subscriptionsData.length}</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg">
             <h3 className="text-sm font-medium text-white/80 mb-1">Monthly spendings</h3>
@@ -115,7 +142,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="space-y-4">
-            {subscriptions.slice(0, 5).map((sub) => (
+            {subscriptionsData.slice(0, 5).map((sub) => (
               <div key={sub._id} className="flex items-center justify-between p-4 bg-white/5 backdrop-blur-sm rounded-lg hover:bg-white/10 transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">

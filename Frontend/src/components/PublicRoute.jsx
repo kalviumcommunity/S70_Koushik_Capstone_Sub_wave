@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const PublicRoute = ({ children }) => {
+const PublicRoute = () => {
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
   
@@ -16,11 +16,11 @@ const PublicRoute = ({ children }) => {
   }, [token, user]);
   
   if (token && user) {
-    // Redirect to dashboard if already authenticated
+    // FIX: Redirect to dashboard if already authenticated
     return <Navigate to="/dashboard" replace />;
   }
   
-  return children;
+  return <Outlet />;
 };
 
 export default PublicRoute; 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { auth } from '../services/api';
 import SubwaveImage from '../assets/Subwave-image.png';
 
 const ResetPassword = () => {
@@ -35,9 +35,7 @@ const ResetPassword = () => {
         return;
       }
 
-      await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, {
-        password
-      });
+      await auth.resetPassword(token, password);
 
       setStatus('success');
     } catch (err) {
@@ -65,7 +63,7 @@ const ResetPassword = () => {
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Password Reset Successful!</h3>
             <p className="text-gray-600 mb-6">Your password has been successfully reset.</p>
             <button
-              onClick={() => navigate('/signin')}
+              onClick={() => navigate('/login')}
               className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md transition duration-300"
             >
               Sign In

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
 import NotificationIcon from '../assets/Notification.png.jpg';
 
 const Notifications = () => {
@@ -38,9 +37,7 @@ const Notifications = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-500">
-      <Sidebar />
-      
-      <div className="ml-64 p-8">
+      <div className="p-8">
         <div className="flex items-center space-x-3 mb-8">
           <img src={NotificationIcon} alt="Notifications" className="w-8 h-8 object-contain" />
           <h1 className="text-2xl font-bold text-white">Notifications & Alerts</h1>

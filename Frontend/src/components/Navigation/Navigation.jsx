@@ -27,8 +27,8 @@ const Navigation = () => {
     localStorage.removeItem('userAvatar');
     localStorage.removeItem('userName');
     
-    // Redirect to signin page
-    navigate('/signin');
+    // Redirect to login page
+    navigate('/login');
   };
 
   const menuItems = [

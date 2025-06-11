@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import backgroundImage from '../assets/Background .jpg';
+import { auth } from '../services/api';
+import backgroundImage from '../assets/Background.jpg';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -33,13 +33,14 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post('/api/auth/register', {
+      const response = await auth.register({
         name,
         email,
         password
       });
 
       if (response.data.requiresVerification) {
+        console.log('Navigating to /verification-pending after signup');
         // Show verification pending message and don't redirect yet
         navigate('/verification-pending', {
           state: {
@@ -83,6 +84,7 @@ const Signup = () => {
             </div>
           )}
           <input
+            id="name"
             type="text"
             placeholder="Name"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -92,6 +94,7 @@ const Signup = () => {
           />
           <div className="relative">
             <input
+              id="email"
               type="email"
               placeholder="Email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -102,6 +105,7 @@ const Signup = () => {
           </div>
           <div className="relative">
             <input
+              id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -163,7 +167,7 @@ const Signup = () => {
         <p className="text-center text-sm text-gray-600 mt-5">
           Already have an account?{' '}
           <span
-            onClick={() => navigate('/signin')}
+            onClick={() => navigate('/login')}
             className="text-indigo-700 cursor-pointer font-medium"
           >
             Sign In

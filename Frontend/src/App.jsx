@@ -1,181 +1,92 @@
 // src/App.jsx
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { AnimatePresence } from 'framer-motion';
-import SignUp from "./pages/Signup";
-import SignIn from "./pages/SignIn";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import ForgotPassword from './pages/forgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import AuthSuccess from './pages/AuthSuccess';
-import VerifyEmail from './pages/VerifyEmail';
-import VerificationPending from './pages/VerificationPending';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import store from './store';
+import { getTheme } from './theme';
+import { useSelector } from 'react-redux';
+
+// Components
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import Layout from './components/Layout/Layout';
-import Budget from './pages/Budget/Budget';
-import Notifications from './pages/Notifications/Notifications';
-import Settings from './pages/Settings/Settings';
-import Admin from './pages/Admin/Admin';
-import Help from './pages/Help/Help';
-import SubscriptionSharing from './pages/SubscriptionSharing/SubscriptionSharing';
+
+// Pages
+import Dashboard from './pages/Dashboard';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/Signup';
+import ForgotPassword from './pages/forgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import VerifyEmail from './pages/VerifyEmail';
+import VerificationPending from './pages/VerificationPending';
+import AuthSuccess from './pages/AuthSuccess';
 import AddSubscription from './pages/AddSubscription';
-import Subscriptions from './pages/Subscriptions/Subscriptions';
+import Notifications from './pages/Notifications';
+import Budget from './pages/Budget';
+import Subscriptions from './pages/Subscriptions';
+import Settings from './pages/Settings';
+import Help from './pages/Help';
 
-// Wrap routes with AnimatePresence
-function AnimatedRoutes() {
-  const location = useLocation();
+const AppContent = () => {
+  const { theme } = useSelector(state => state.ui);
+  const currentTheme = getTheme(theme);
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        {/* Root Route - Always redirects to signup for new users */}
-        <Route
-          path="/"
-          element={<Navigate to="/signup" replace />}
-        />
+    <ThemeProvider theme={currentTheme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route element={<PublicRoute />}>
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/verify-email/:token" element={<VerifyEmail />} />
+            <Route path="/verification-pending" element={<VerificationPending />} />
+            <Route path="/auth-success" element={<AuthSuccess />} />
+          </Route>
 
-        {/* Public Routes */}
-        <Route
-          path="/signup"
-          element={
-            <PublicRoute>
-              <SignUp />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path="/signin"
-          element={
-            <PublicRoute>
-              <SignIn />
-            </PublicRoute>
-          }
-        />
-
-        {/* Auth Flow Routes - These should be accessible without authentication */}
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/verification-pending" element={<VerificationPending />} />
-        <Route path="/auth-success" element={<AuthSuccess />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-
-        {/* Protected Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <Dashboard />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/subscriptions"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <Subscriptions />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/add-subscription"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <AddSubscription />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/budget"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <Budget />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/notifications"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <Notifications />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/settings"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <Settings />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <Admin />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/help"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <Help />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/subscription-sharing"
-          element={
-            <PrivateRoute>
-              <Layout>
-                <SubscriptionSharing />
-              </Layout>
-            </PrivateRoute>
-          }
-        />
-
-        {/* Catch all route */}
-        <Route
-          path="*"
-          element={<Navigate to="/signup" replace />}
-        />
-      </Routes>
-    </AnimatePresence>
+          {/* Protected Routes */}
+          <Route element={<PrivateRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/subscriptions" element={<Subscriptions />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/add-subscription" element={<AddSubscription />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/budget" element={<Budget />} />
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            </Route>
+          </Route>
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </ThemeProvider>
   );
-}
+};
 
-function App() {
+const App = () => {
   return (
-    <Router>
-      <AnimatedRoutes />
-    </Router>
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
   );
-}
+};
 
 export default App;

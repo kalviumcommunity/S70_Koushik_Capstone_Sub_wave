@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
 import BudgetIcon from '../assets/Budget.png.jpg';
 
 const Budget = () => {
@@ -19,9 +18,7 @@ const Budget = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-500">
-      <Sidebar />
-      
-      <div className="ml-64 p-8">
+      <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center space-x-3">
             <img src={BudgetIcon} alt="Budget" className="w-8 h-8 object-contain" />

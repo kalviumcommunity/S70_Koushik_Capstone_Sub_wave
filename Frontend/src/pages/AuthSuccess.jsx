@@ -15,19 +15,19 @@ const AuthSuccess = () => {
 
     if (token && user) {
       try {
-        const parsedUser = JSON.parse(user);
+        const parsedUser = JSON.parse(decodeURIComponent(user));
         // Store auth data
         localStorage.setItem('token', token);
-        localStorage.setItem('user', user);
+        localStorage.setItem('user', JSON.stringify(parsedUser));
         setUserData(parsedUser);
         setShowWelcome(true);
       } catch (error) {
         console.error('Error processing auth data:', error);
-        navigate('/signin');
+        navigate('/login');
       }
     } else {
-      // If no token/user, redirect to signin
-      navigate('/signin');
+      // If no token/user, redirect to login
+      navigate('/login');
     }
   }, [navigate, location]);
 

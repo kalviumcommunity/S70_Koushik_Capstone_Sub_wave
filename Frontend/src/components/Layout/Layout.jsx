@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, Outlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   HomeIcon,
@@ -19,7 +19,7 @@ const navItems = [
   { name: 'Help & support', path: '/help', icon: QuestionMarkCircleIcon },
 ];
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const location = useLocation();
 
   return (
@@ -82,7 +82,7 @@ const Layout = ({ children }) => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              {children}
+              <Outlet />
             </motion.div>
           </AnimatePresence>
         </main>
