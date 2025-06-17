@@ -56,61 +56,8 @@ SubWave is a modern web application designed to help users manage their subscrip
    npm install
    ```
 
-4. Set up environment variables:
-   Create a `.env` file in the Backend directory with the following variables:
-   ```
-   PORT=5000
-   MONGODB_URI=your_mongodb_uri
-   JWT_SECRET=your_jwt_secret
-   EMAIL_USER=your_email
-   EMAIL_PASSWORD=your_email_password
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   ```
 
-5. Start the development servers:
-   
-   Frontend:
-   ```bash
-   cd Frontend
-   npm run dev
-   ```
 
-   Backend:
-   ```bash
-   cd Backend
-   npm run dev
-   ```
-
-## Project Structure
-
-```
-subwave/
-├── Frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── assets/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── public/
-│   └── package.json
-├── Backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   └── server.js
-└── README.md
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## License
 
