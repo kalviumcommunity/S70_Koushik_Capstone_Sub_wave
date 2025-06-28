@@ -20,6 +20,46 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required'],
     minlength: [6, 'Password must be at least 6 characters']
   },
+<<<<<<< HEAD
+=======
+  avatar: {
+    type: String,
+    default: ''
+  },
+  preferences: {
+    theme: {
+      type: String,
+      enum: ['light', 'dark'],
+      default: 'light'
+    },
+    currency: {
+      type: String,
+      default: 'USD'
+    },
+    dateFormat: {
+      type: String,
+      default: 'MM/DD/YYYY'
+    },
+    notifications: {
+      email: {
+        type: Boolean,
+        default: true
+      },
+      push: {
+        type: Boolean,
+        default: true
+      },
+      renewal: {
+        type: Boolean,
+        default: true
+      },
+      budget: {
+        type: Boolean,
+        default: true
+      }
+    }
+  },
+>>>>>>> be25477 (Implemented google)
   isAdmin: {
     type: Boolean,
     default: false

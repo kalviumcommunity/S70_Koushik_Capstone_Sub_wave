@@ -44,6 +44,7 @@ export const authAPI = {
   googleLogin: (data) => api.post('/auth/google', data),
   validate2FA: (data) => api.post('/auth/validate-2fa', data),
   verifyEmail: (token) => api.post('/auth/verify-email', { token }),
+<<<<<<< HEAD
   // TODO: Implement these endpoints in backend
   // forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
   // resetPassword: (token, password) =>
@@ -56,6 +57,18 @@ export const userAPI = {
   // TODO: Implement these endpoints in backend
   // changePassword: (data) => api.put('/auth/change-password', data),
   // updatePreferences: (data) => api.put('/auth/preferences', data),
+=======
+  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  resetPassword: (token, password) =>
+    api.post('/auth/reset-password', { token, password }),
+};
+
+// User API
+export const userAPI = {
+  updateProfile: (data) => api.put('/auth/profile', data),
+  changePassword: (data) => api.put('/auth/change-password', data),
+  updatePreferences: (data) => api.put('/auth/preferences', data),
+>>>>>>> be25477 (Implemented google)
 };
 
 // Subscription API
@@ -74,6 +87,7 @@ export const subscriptionAPI = {
   getBudgetSuggestions: () => api.get('/subscriptions/analytics/suggestions'),
   uploadFile: (formData) => api.post('/subscriptions/upload-file', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   getFiles: (subscriptionId) => api.get(`/subscriptions/${subscriptionId}/files`),
+<<<<<<< HEAD
   // TODO: Implement these endpoints in backend
   // share: (id, userData) => api.post(`/subscriptions/${id}/share`, userData),
   // removeShare: (id, userId) =>
@@ -96,5 +110,31 @@ export const subscriptionAPI = {
 //   updatePreferences: (preferences) =>
 //     api.put('/notifications/preferences', preferences),
 // };
+=======
+  share: (id, userData) => api.post(`/subscriptions/share`, { subscriptionId: id, ...userData }),
+  removeShare: (id, userId) =>
+    api.delete(`/subscriptions/${id}/share/${userId}`),
+  getShared: () => api.get('/subscriptions/shared'),
+};
+
+// Budget API
+export const budgetAPI = {
+  getStats: () => api.get('/budget/stats'),
+  getHistory: () => api.get('/budget/history'),
+  setBudget: (data) => api.post('/budget', data),
+  updateBudget: (data) => api.put('/budget', data),
+};
+
+// Notification API
+export const notificationAPI = {
+  getAll: (params) => api.get('/notifications', { params }),
+  getUnreadCount: () => api.get('/notifications/unread-count'),
+  markAsRead: (id) => api.put(`/notifications/${id}/read`),
+  markAllAsRead: () => api.put('/notifications/mark-all-read'),
+  updatePreferences: (preferences) =>
+    api.put('/notifications/preferences', preferences),
+  delete: (id) => api.delete(`/notifications/${id}`),
+};
+>>>>>>> be25477 (Implemented google)
 
 export default api; 

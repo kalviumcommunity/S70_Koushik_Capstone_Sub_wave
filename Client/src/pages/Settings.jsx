@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from '../features/auth/authSlice';
+<<<<<<< HEAD
 import { RiUserLine, RiLockLine, RiNotification3Line, RiPaletteLine } from 'react-icons/ri';
+=======
+import { RiUserLine, RiLockLine, RiNotification3Line, RiPaletteLine, RiBellLine } from 'react-icons/ri';
+>>>>>>> be25477 (Implemented google)
 import { userAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import axios from 'axios';
@@ -62,8 +66,15 @@ const Settings = () => {
     }
     setIsLoading(true);
     try {
+<<<<<<< HEAD
       // await userAPI.changePassword(passwordData);
       // TODO: Implement when backend is ready
+=======
+      await userAPI.changePassword({
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      });
+>>>>>>> be25477 (Implemented google)
       toast.success('Password changed successfully');
       setPasswordData({
         currentPassword: '',
@@ -79,8 +90,12 @@ const Settings = () => {
 
   const handlePreferencesUpdate = async () => {
     try {
+<<<<<<< HEAD
       // await userAPI.updatePreferences({ theme, currency, dateFormat });
       // TODO: Implement when backend is ready
+=======
+      await userAPI.updatePreferences({ theme, currency, dateFormat });
+>>>>>>> be25477 (Implemented google)
       toast.success('Preferences updated successfully');
     } catch (error) {
       toast.error('Failed to update preferences');

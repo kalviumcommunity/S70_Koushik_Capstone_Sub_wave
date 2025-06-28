@@ -7,6 +7,11 @@ const errorHandler = require('./middleware/errorHandler');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const subscriptionRoutes = require('./routes/subscriptionRoutes');
+<<<<<<< HEAD
+=======
+const budgetRoutes = require('./routes/budgetRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+>>>>>>> be25477 (Implemented google)
 const adminRoutes = require('./routes/adminRoutes');
 const cron = require('node-cron');
 const { sendRenewalReminders } = require('./controllers/subscriptionController');
@@ -30,6 +35,11 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);  // login, register
 app.use('/api/auth', userRoutes);  // profile, update, delete, all users
 app.use('/api/subscriptions', subscriptionRoutes);  // subscription management
+<<<<<<< HEAD
+=======
+app.use('/api/budget', budgetRoutes);  // budget management
+app.use('/api/notifications', notificationRoutes);  // notification management
+>>>>>>> be25477 (Implemented google)
 app.use('/api/admin', adminRoutes);  // admin operations
 
 // Swagger API documentation

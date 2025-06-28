@@ -236,3 +236,105 @@ exports.getFiles = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch files' });
   }
 };
+<<<<<<< HEAD
+=======
+
+// Share subscription with another user
+exports.shareSubscription = async (req, res) => {
+  const { subscriptionId, userEmail, permissions } = req.body;
+  try {
+    const subscription = await Subscription.findById(subscriptionId);
+    if (!subscription) {
+      return res.status(404).json({ message: 'Subscription not found' });
+    }
+
+    // Check if user owns the subscription
+    if (subscription.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to share this subscription' });
+    }
+
+    // Find the user to share with
+    const userToShare = await User.findOne({ email: userEmail });
+    if (!userToShare) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if already shared
+    if (subscription.sharedWith.includes(userToShare._id)) {
+      return res.status(400).json({ message: 'Subscription already shared with this user' });
+    }
+
+    // Add user to shared list
+    subscription.sharedWith.push({
+      user: userToShare._id,
+      permissions: permissions || ['read'],
+      sharedAt: new Date()
+    });
+
+    // Add to activity log
+    subscription.activityLogs.push({
+      action: 'Shared Subscription',
+      user: req.user._id,
+      details: `Shared with ${userEmail}`
+    });
+
+    await subscription.save();
+
+    res.status(200).json({
+      message: 'Subscription shared successfully',
+      sharedWith: userToShare.email
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to share subscription' });
+  }
+};
+
+// Remove share from a user
+exports.removeShare = async (req, res) => {
+  const { subscriptionId, userId } = req.params;
+  try {
+    const subscription = await Subscription.findById(subscriptionId);
+    if (!subscription) {
+      return res.status(404).json({ message: 'Subscription not found' });
+    }
+
+    // Check if user owns the subscription
+    if (subscription.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to modify this subscription' });
+    }
+
+    // Remove user from shared list
+    subscription.sharedWith = subscription.sharedWith.filter(
+      share => share.user.toString() !== userId
+    );
+
+    // Add to activity log
+    subscription.activityLogs.push({
+      action: 'Removed Share',
+      user: req.user._id,
+      details: `Removed share for user ${userId}`
+    });
+
+    await subscription.save();
+
+    res.status(200).json({
+      message: 'Share removed successfully'
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to remove share' });
+  }
+};
+
+// Get shared subscriptions (subscriptions shared with current user)
+exports.getSharedSubscriptions = async (req, res) => {
+  try {
+    const sharedSubscriptions = await Subscription.find({
+      'sharedWith.user': req.user._id
+    }).populate('userId', 'name email');
+
+    res.status(200).json(sharedSubscriptions);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch shared subscriptions' });
+  }
+};
+>>>>>>> be25477 (Implemented google)

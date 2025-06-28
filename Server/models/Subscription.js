@@ -14,6 +14,16 @@ const subscriptionSchema = new mongoose.Schema({
       role: { type: String, enum: ['Owner', 'Admin', 'Member'], default: 'Member' }
     }
   ],
+<<<<<<< HEAD
+=======
+  sharedWith: [
+    {
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      permissions: [{ type: String, enum: ['read', 'write', 'admin'], default: 'read' }],
+      sharedAt: { type: Date, default: Date.now }
+    }
+  ],
+>>>>>>> be25477 (Implemented google)
   activityLogs: [
     {
       action: String,

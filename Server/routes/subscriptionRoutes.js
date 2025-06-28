@@ -13,7 +13,14 @@ const {
   getBudgetSuggestions,
   upload,
   uploadFile,
+<<<<<<< HEAD
   getFiles
+=======
+  getFiles,
+  shareSubscription,
+  removeShare,
+  getSharedSubscriptions
+>>>>>>> be25477 (Implemented google)
 } = require('../controllers/subscriptionController');
 const protect = require('../middleware/authMiddleware');
 
@@ -83,6 +90,12 @@ router.delete('/:id', deleteSubscription);
 router.post('/invite-collaborator', inviteCollaborator);
 router.post('/update-collaborator-role', updateCollaboratorRole);
 router.post('/remove-collaborator', removeCollaborator);
+<<<<<<< HEAD
+=======
+router.post('/share', shareSubscription);
+router.delete('/:subscriptionId/share/:userId', removeShare);
+router.get('/shared', getSharedSubscriptions);
+>>>>>>> be25477 (Implemented google)
 router.get('/:subscriptionId/activity-logs', getActivityLogs);
 router.get('/analytics/monthly', getSpendingByMonth);
 router.get('/analytics/category', getCategoryBreakdown);
