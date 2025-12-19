@@ -71,7 +71,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-Your Name - your.email@example.com
+Koushik Reddy KM - koushikreddykm@gmail.com
 Project Link: https://github.com/yourusername/subwave
 
 # Frontend deploy link
