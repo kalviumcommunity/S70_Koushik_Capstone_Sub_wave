@@ -51,13 +51,16 @@ app.get('/', (req, res) => {
 });
 
 // Routes
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
+
 app.use('/api/auth', authRoutes);  // login, register
-app.use('/api/auth', userRoutes);  // profile, update, delete, all users
+app.use('/api/users', userRoutes);  // profile, update, delete, all users
+app.use('/api/subscriptions', subscriptionRoutes); // subscriptions CRUD
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ 
+  res.status(500).json({
     message: 'Something went wrong!',
     error: process.env.NODE_ENV === 'development' ? err.message : undefined
   });

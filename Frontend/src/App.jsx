@@ -30,6 +30,7 @@ import Budget from './pages/Budget';
 import Subscriptions from './pages/Subscriptions';
 import Settings from './pages/Settings';
 import Help from './pages/Help';
+import Landing from './pages/Landing';
 
 const AppContent = () => {
   const { theme } = useSelector(state => state.ui);
@@ -61,9 +62,12 @@ const AppContent = () => {
               <Route path="/add-subscription" element={<AddSubscription />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/budget" element={<Budget />} />
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/budget" element={<Budget />} />
             </Route>
           </Route>
+
+          {/* Landing Page Route */}
+          <Route path="/" element={<Landing />} />
         </Routes>
       </Router>
       <ToastContainer
@@ -77,7 +81,7 @@ const AppContent = () => {
         draggable
         pauseOnHover
       />
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 

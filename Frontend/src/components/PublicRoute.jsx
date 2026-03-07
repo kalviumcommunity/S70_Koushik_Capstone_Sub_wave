@@ -1,25 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const PublicRoute = () => {
   const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user'));
-  
-  useEffect(() => {
-    // Clear any existing auth data when accessing public routes
-    if (!token && !user) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('userAvatar');
-      localStorage.removeItem('userName');
+  let user = null;
+
+  try {
+    const userStr = localStorage.getItem('user');
+    if (userStr && userStr !== 'undefined') {
+      user = JSON.parse(userStr);
     }
-  }, [token, user]);
-  
+  } catch (e) {
+    console.error('Error parsing user from localStorage', e);
+  }
+
   if (token && user) {
-    // FIX: Redirect to dashboard if already authenticated
+    // Redirect to dashboard if already authenticated
     return <Navigate to="/dashboard" replace />;
   }
-  
+
   return <Outlet />;
 };
 

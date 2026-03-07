@@ -20,7 +20,9 @@ const AuthSuccess = () => {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(parsedUser));
         setUserData(parsedUser);
-        setShowWelcome(true);
+
+        // Redirect directly to dashboard without animation
+        navigate('/dashboard', { replace: true });
       } catch (error) {
         console.error('Error processing auth data:', error);
         navigate('/login');
@@ -30,19 +32,6 @@ const AuthSuccess = () => {
       navigate('/login');
     }
   }, [navigate, location]);
-
-  const handleAnimationComplete = () => {
-    navigate('/dashboard');
-  };
-
-  if (showWelcome && userData) {
-    return (
-      <WelcomeAnimation
-        username={userData.name}
-        onComplete={handleAnimationComplete}
-      />
-    );
-  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-900 to-indigo-900">

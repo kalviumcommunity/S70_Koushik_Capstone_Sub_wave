@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import {
   QuestionMarkCircleIcon,
   ChatBubbleOvalLeftIcon,
   DocumentIcon,
   BookOpenIcon,
+  EnvelopeIcon,
+  ChevronDownIcon
 } from '@heroicons/react/24/outline';
-import HelpIcon from '../../assets/Help and support.png.jpg';
-import SupportTeam from '../../assets/Support team illustration.png.png';
-import TutorialIcon from '../../assets/Tutorial icon.png.png';
-import CommunityIcon from '../../assets/Community icon.png.png';
-import DocumentationIcon from '../../assets/Documentation icon.png.png';
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,48 +23,41 @@ const FAQItem = ({ question, answer }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
-      className="border-b border-gray-200"
+      className="border-b border-white/5 last:border-0"
     >
       <button
-        className="w-full py-4 flex justify-between items-center text-left focus:outline-none"
+        className="w-full py-5 flex justify-between items-center text-left focus:outline-none group"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-base font-medium text-gray-900">{question}</span>
+        <span className="text-base font-bold text-gray-200 group-hover:text-cyan-400 transition-colors">{question}</span>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          className="ml-6 flex-shrink-0"
+          className="ml-6 flex-shrink-0 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-white/10 transition-colors"
         >
-          <svg
-            className="w-5 h-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <ChevronDownIcon className="w-5 h-5 text-gray-400" />
         </motion.span>
       </button>
-      <motion.div
-        initial={false}
-        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <div className="pb-4">
-          <p className="text-gray-500">{answer}</p>
-        </div>
-      </motion.div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="pb-5 pt-2">
+              <p className="text-gray-400 leading-relaxed">{answer}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
 
-const FeatureCard = ({ icon, title, description, delay }) => {
+const FeatureCard = ({ icon: Icon, title, description, delay, gradient }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -80,25 +70,17 @@ const FeatureCard = ({ icon, title, description, delay }) => {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay }}
       href={`#${title.toLowerCase()}`}
-      className="bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+      className="bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl hover:bg-white/10 transition-all duration-300 group relative overflow-hidden flex flex-col items-center text-center"
     >
-      <div className="relative">
-        <motion.div
-          animate={{ 
-            scale: [1, 1.1, 1],
-            rotate: [0, 5, -5, 0]
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            repeatType: "reverse"
-          }}
-          className="absolute -top-2 -left-2 w-12 h-12 bg-white/5 rounded-full"
-        />
-        <img src={icon} alt={title} className="h-8 w-8 object-contain mb-4 relative z-10" />
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+
+      <div className="relative z-10">
+        <div className="w-16 h-16 mx-auto rounded-2xl bg-black/40 border border-white/10 flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform">
+          <Icon className="w-8 h-8 text-white" />
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">{title}</h3>
+        <p className="text-gray-400 text-sm">{description}</p>
       </div>
-      <h3 className="text-lg font-medium text-white mb-2">{title}</h3>
-      <p className="text-white/70">{description}</p>
     </motion.a>
   );
 };
@@ -107,109 +89,123 @@ const Help = () => {
   const faqs = [
     {
       question: 'How do I add a new subscription?',
-      answer: 'To add a new subscription, go to the Subscriptions page and click the "Add Subscription" button. Fill in the required details like service name, cost, and billing cycle.',
+      answer: 'To add a new subscription, go to the Dashboard or Subscriptions page and click the "+ Add New" or "+ Add Subscription" button. Fill in the required details like service name, cost, billing cycle, and next renewal date.',
     },
     {
       question: 'How can I track my spending?',
-      answer: 'You can track your spending through the Budget page, which shows your monthly expenses, spending trends, and subscription costs breakdown.',
+      answer: 'You can track your spending through the Dashboard which provides a high-level summary, or the detailed Budget page which breaks down your expenses by category and tracks your progress against your set monthly budget.',
     },
     {
-      question: 'Can I share subscriptions with others?',
-      answer: 'Yes! You can share subscriptions with family members or friends through the Subscription Sharing feature. Just select the subscription and click "Share" to invite others.',
+      question: 'Will I be notified before a subscription renews?',
+      answer: 'Yes! SubWave will automatically alert you based on your Notification Preferences. You can manage these in the Notifications tab to receive alerts via email or push notifications before a payment is due.',
     },
     {
-      question: 'How do I cancel my subscription?',
-      answer: 'To cancel your subscription, go to the Settings page and select "Billing & Subscriptions". Click on "Cancel Subscription" and follow the prompts.',
+      question: 'Can I export my subscription data?',
+      answer: 'Currently, subscription data export is available for Pro users in the Settings tab under Billing. You can export to CSV or PDF formats.',
     },
+    {
+      question: 'How do I change my primary currency?',
+      answer: 'Navigate to the Settings page and select the Preferences tab. From there, you can choose your preferred currency from the dropdown menu. All charts and numbers will automatically update.'
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-500">
-      <div className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <img src={HelpIcon} alt="Help" className="w-8 h-8 object-contain" />
-            <h1 className="text-4xl font-bold text-white">Help & Support</h1>
-          </div>
-          <p className="text-lg text-white/80">Find answers and learn how to make the most of our platform</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <FeatureCard
-            icon={DocumentationIcon}
-            title="Documentation"
-            description="Browse our detailed documentation and user guides"
-            delay={0.1}
-          />
-          <FeatureCard
-            icon={HelpIcon}
-            title="FAQ"
-            description="Find answers to commonly asked questions"
-            delay={0.2}
-          />
-          <FeatureCard
-            icon={CommunityIcon}
-            title="Community"
-            description="Join our community forum for discussions"
-            delay={0.3}
-          />
-          <FeatureCard
-            icon={TutorialIcon}
-            title="Tutorials"
-            description="Watch video tutorials and learn best practices"
-            delay={0.4}
-          />
+    <div className="max-w-7xl mx-auto space-y-8 pb-12">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center space-x-4 mb-8"
+      >
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 border border-white/10 flex items-center justify-center shadow-lg relative overflow-hidden">
+          <div className="absolute inset-0 bg-cyan-500/20 blur-xl"></div>
+          <QuestionMarkCircleIcon className="w-8 h-8 text-white relative z-10" />
         </div>
+        <div>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Help & Support</h1>
+          <p className="text-gray-400">Everything you need to know about using SubWave.</p>
+        </div>
+      </motion.div>
 
+      {/* Support Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <FeatureCard
+          icon={EnvelopeIcon}
+          title="Email Support"
+          description="Get help via email within 24 hours. Ideal for account or billing issues."
+          delay={0.1}
+          gradient="from-blue-500/5 to-cyan-500/5"
+        />
+        <FeatureCard
+          icon={ChatBubbleOvalLeftIcon}
+          title="Live Chat"
+          description="Chat with our support team in real-time for immediate assistance."
+          delay={0.2}
+          gradient="from-purple-500/5 to-pink-500/5"
+        />
+        <FeatureCard
+          icon={DocumentIcon}
+          title="Documentation"
+          description="Browse our detailed guides and API documentation for developers."
+          delay={0.3}
+          gradient="from-pink-500/5 to-orange-500/5"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* FAQ Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-8 mb-12"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="lg:col-span-8 bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-8 relative overflow-hidden shadow-2xl h-fit"
         >
-          <h2 className="text-2xl font-semibold text-white mb-8">Frequently Asked Questions</h2>
-          <div className="space-y-4">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+          <h2 className="text-2xl font-bold text-white mb-6 relative z-10">Frequently Asked Questions</h2>
+
+          <div className="relative z-10">
             {faqs.map((faq, index) => (
               <FAQItem key={index} question={faq.question} answer={faq.answer} />
             ))}
           </div>
         </motion.div>
 
+        {/* Contact Side Panel */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-8"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="lg:col-span-4 space-y-6"
         >
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="flex justify-center mb-6">
-              <img src={SupportTeam} alt="Support Team" className="w-48 h-48 object-contain" />
+          <div className="bg-gradient-to-br from-purple-900/40 to-cyan-900/40 border border-purple-500/30 rounded-3xl p-8 text-center relative overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+            <div className="w-20 h-20 mx-auto bg-black/40 border border-white/20 rounded-2xl flex items-center justify-center mb-6 shadow-inner relative z-10">
+              <span className="text-4xl">👋</span>
             </div>
-            <h2 className="text-2xl font-semibold text-white mb-4">Still need help?</h2>
-            <p className="text-white/80 mb-6">
-              Our support team is available 24/7 to assist you with any questions or concerns.
+            <h3 className="text-xl font-bold text-white mb-3 relative z-10">Still need help?</h3>
+            <p className="text-gray-300 text-sm mb-8 relative z-10">
+              Our customer success team is available 24/7 to assist you with any questions.
             </p>
-            <div className="space-x-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-white/20 text-white rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 shadow-md"
-              >
-                Contact Support
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 border-2 border-white/20 text-white rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2"
-              >
-                Submit Ticket
-              </motion.button>
-            </div>
+            <button className="w-full px-6 py-3 bg-white text-purple-900 font-bold rounded-xl hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all hover:scale-105 relative z-10">
+              Contact Support
+            </button>
+          </div>
+
+          <div className="bg-black/40 border border-white/10 backdrop-blur-md rounded-3xl p-6 shadow-xl relative overflow-hidden">
+            <h3 className="text-white font-bold mb-4">Quick Resources</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="#" className="flex items-center text-sm text-gray-400 hover:text-cyan-400 transition-colors group">
+                  <BookOpenIcon className="w-4 h-4 mr-3 group-hover:scale-110 transition-transform" /> Getting Started Guide
+                </a>
+              </li>
+              <li>
+                <a href="#" className="flex items-center text-sm text-gray-400 hover:text-purple-400 transition-colors group">
+                  <QuestionMarkCircleIcon className="w-4 h-4 mr-3 group-hover:scale-110 transition-transform" /> Keyboard Shortcuts
+                </a>
+              </li>
+            </ul>
           </div>
         </motion.div>
       </div>
@@ -217,4 +213,4 @@ const Help = () => {
   );
 };
 
-export default Help; 
+export default Help;

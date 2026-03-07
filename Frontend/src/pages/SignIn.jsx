@@ -53,112 +53,120 @@ const SignIn = () => {
   };
 
   return (
-    <div className="relative">
-      <div
-        className="flex justify-center items-center min-h-screen bg-opacity-80 bg-cover bg-center shadow-lg bg- relative overflow-hidden"
-        style={{ backgroundImage: `url(${SubwaveImage})` }}
-      >
-        <div className='absolute inset-0 bg-black opacity-40 z-0'/> 
-        <div
-          className="relative z-10 bg-white bg-opacity-90 p-10 rounded-3xl shadow-2xl w-full max-w-md"
-        >
-          <h2 className="text-3xl font-bold text-center text-purple-700 mb-8">Welcome Back</h2>
-          {/* Success Message */}
-          {location.state?.message && (
-            <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md text-center">
-              {location.state.message}
-            </div>
-          )}
-          {/* Error Message */}
-          {error && (
-            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-center">
-              {error}
-            </div>
-          )}
-          <form onSubmit={handleSubmit} className="space-y-5">
+    <div className="relative min-h-screen flex justify-center items-center bg-[#050511] overflow-hidden font-sans">
+      {/* Background Orbs to match Landing */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-600/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
+
+      <div className="relative z-10 p-10 rounded-[2rem] w-full max-w-sm bg-black/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+        <div className="flex justify-center mb-6">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center">
+            <span className="text-white font-bold text-2xl leading-none">S</span>
+          </div>
+        </div>
+        <h2 className="text-3xl font-bold text-center text-white mb-2">Welcome Back</h2>
+        <p className="text-center text-gray-400 text-sm mb-8">Sign in to SubWave</p>
+
+        {/* Success Message */}
+        {location.state?.message && (
+          <div className="mb-4 p-3 bg-green-500/10 border border-green-500/50 text-green-400 rounded-lg text-center text-sm backdrop-blur-sm">
+            {location.state.message}
+          </div>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 text-red-400 rounded-lg text-center text-sm backdrop-blur-sm">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
             <input
               id="email"
               type="email"
-              placeholder="Enter your Gmail address"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Email address"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <div className="relative">
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              >
-                {showPassword ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                  </svg>
-                )}
-              </button>
-            </div>
+          </div>
+          <div className="relative">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all pr-12"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-md transition block mx-auto duration-300 ${
-                isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            > 
-              {isSubmitting ? 'Signing In...' : 'Sign In'}
-            </button>
-          </form>
-          <div className="mt-4">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
-              </div>
-            </div>
-            <button
-              onClick={handleGoogleSignIn}
-              className="mt-4 w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 transition duration-300"
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
             >
-              <img
-                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                alt="Google"
-                className="w-5 h-5"
-              />
-              Sign in with Google
+              {showPassword ? (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                </svg>
+              )}
             </button>
           </div>
-          <p className="text-center text-sm text-gray-600 mt-5">
-            Don't have an account?{' '}
-            <span
-              onClick={() => navigate('/register')}
-              className="text-purple-700 cursor-pointer font-medium"
-            >
-              Sign Up
-            </span>
-          </p>
           <p
-            className="text-center text-sm text-purple-600 mt-2 cursor-pointer hover:underline"
+            className="text-right text-xs text-purple-400 hover:text-purple-300 cursor-pointer pt-1 transition-colors"
             onClick={() => navigate('/forgot-password')}
           >
             Forgot Password?
           </p>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-3 mt-4 bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] text-white font-semibold rounded-xl transition-all duration-300 ${isSubmitting ? 'opacity-70 cursor-wait' : 'hover:scale-[1.02]'
+              }`}
+          >
+            {isSubmitting ? 'Signing In...' : 'Sign In'}
+          </button>
+        </form>
+
+        <div className="mt-8">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/10"></div>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-4 bg-transparent text-gray-500 backdrop-blur-xl">Or continue with</span>
+            </div>
+          </div>
+          <button
+            onClick={handleGoogleSignIn}
+            className="mt-6 w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white hover:bg-white/10 transition duration-300"
+          >
+            <img
+              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+              alt="Google"
+              className="w-5 h-5"
+            />
+            Sign in with Google
+          </button>
         </div>
+
+        <p className="text-center text-sm text-gray-400 mt-8">
+          Don't have an account?{' '}
+          <span
+            onClick={() => navigate('/register')}
+            className="text-cyan-400 hover:text-cyan-300 cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 font-bold transition-colors"
+          >
+            Sign Up
+          </span>
+        </p>
       </div>
     </div>
   );

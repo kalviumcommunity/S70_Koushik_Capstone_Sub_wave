@@ -60,44 +60,50 @@ const Signup = () => {
   };
 
   return (
-    <div
-      className="flex justify-center items-center min-h-screen relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
+    <div className="relative min-h-screen flex justify-center items-center bg-[#050511] overflow-hidden font-sans">
+      {/* Background Orbs to match Landing */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-600/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
+
       {/* Signup Card */}
       <motion.div
         initial={{ rotateY: -90, opacity: 0 }}
         animate={{ rotateY: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="bg-white bg-opacity-90 backdrop-blur-lg p-10 rounded-3xl shadow-2xl w-full max-w-md z-20"
+        className="relative z-10 p-10 rounded-[2rem] w-full max-w-sm bg-black/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
       >
-        <h2 className="text-3xl font-bold text-center text-indigo-700 mb-8">Create Account</h2>
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="flex justify-center mb-6">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center">
+            <span className="text-white font-bold text-2xl leading-none">S</span>
+          </div>
+        </div>
+        <h2 className="text-3xl font-bold text-center text-white mb-2">Create Account</h2>
+        <p className="text-center text-gray-400 text-sm mb-8">Join thousands of SubWave users</p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="p-3 bg-red-100 text-red-700 rounded-md text-center">
+            <div className="p-3 bg-red-500/10 border border-red-500/50 text-red-400 rounded-lg text-center text-sm backdrop-blur-sm">
               {error}
             </div>
           )}
-          <input
-            id="name"
-            type="text"
-            placeholder="Name"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+
+          <div>
+            <input
+              id="name"
+              type="text"
+              placeholder="Full Name"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
           <div className="relative">
             <input
               id="email"
               type="email"
-              placeholder="Email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Email address"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -108,7 +114,7 @@ const Signup = () => {
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all pr-12"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -116,7 +122,7 @@ const Signup = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
             >
               {showPassword ? (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -133,27 +139,26 @@ const Signup = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md transition duration-300 ${
-              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`w-full py-3 mt-4 bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] text-white font-semibold rounded-xl transition-all duration-300 ${isSubmitting ? 'opacity-70 cursor-wait' : 'hover:scale-[1.02]'
+              }`}
           >
             {isSubmitting ? 'Signing Up...' : 'Sign Up'}
           </button>
         </form>
 
-        <div className="mt-4">
+        <div className="mt-8">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-white/10"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-4 bg-transparent text-gray-500 backdrop-blur-xl">Or continue with</span>
             </div>
           </div>
 
           <button
             onClick={handleGoogleSignUp}
-            className="mt-4 w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 transition duration-300"
+            className="mt-6 w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white hover:bg-white/10 transition duration-300"
           >
             <img
               src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
@@ -164,11 +169,11 @@ const Signup = () => {
           </button>
         </div>
 
-        <p className="text-center text-sm text-gray-600 mt-5">
+        <p className="text-center text-sm text-gray-400 mt-8">
           Already have an account?{' '}
           <span
             onClick={() => navigate('/login')}
-            className="text-indigo-700 cursor-pointer font-medium"
+            className="text-cyan-400 hover:text-cyan-300 cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 font-bold transition-colors"
           >
             Sign In
           </span>

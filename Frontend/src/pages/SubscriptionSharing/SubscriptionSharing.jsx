@@ -32,13 +32,13 @@ const SharedSubscriptionCard = ({ subscription, onManage }) => (
         <div>
           <p className="text-sm text-white/70">Your share</p>
           <p className="text-lg font-medium text-white">
-            ${subscription.userShare}/mo
+            ₹{subscription.userShare}/mo
           </p>
         </div>
         <div>
           <p className="text-sm text-white/70">Total cost</p>
           <p className="text-lg font-medium text-white">
-            ${subscription.totalCost}/mo
+            ₹{subscription.totalCost}/mo
           </p>
         </div>
       </div>
@@ -85,7 +85,7 @@ const InviteCard = ({ invite, onAccept, onDecline }) => (
       <div className="mb-4">
         <p className="text-sm text-white/70">Your share would be</p>
         <p className="text-lg font-medium text-white">
-          ${invite.share}/mo
+          ₹{invite.share}/mo
         </p>
       </div>
       <div className="flex space-x-4">
@@ -183,7 +183,7 @@ const SubscriptionSharing = () => {
               Monthly Savings
             </h3>
             <p className="text-2xl font-semibold text-white">
-              ${stats.monthlySavings}
+              ₹{stats.monthlySavings}
             </p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg p-6">
