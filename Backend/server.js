@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
-const MongoStore = require('connect-mongo').default || require('connect-mongo');
+const MongoStore = require('connect-mongo');
 const corsOptions = require('./config/cors');
 
 // Load environment variables first
