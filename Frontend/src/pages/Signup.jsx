@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../services/api';
+import { auth, API_BASE_URL } from '../services/api';
 import backgroundImage from '../assets/Background.jpg';
 
 const Signup = () => {
@@ -56,7 +56,7 @@ const Signup = () => {
   };
 
   const handleGoogleSignUp = () => {
-    window.location.href = '/api/auth/google';
+    window.location.href = `${API_BASE_URL}/api/auth/google`;
   };
 
   return (

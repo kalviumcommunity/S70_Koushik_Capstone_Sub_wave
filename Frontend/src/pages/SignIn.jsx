@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { auth } from '../services/api';
+import { auth, API_BASE_URL } from '../services/api';
 import SubwaveImage from '../assets/Background.jpg';
 // import WelcomeAnimation from '../components/WelcomeAnimation'; // Animation temporarily disabled for reliability
 
@@ -49,7 +49,7 @@ const SignIn = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = '/api/auth/google';
+    window.location.href = `${API_BASE_URL}/api/auth/google`;
   };
 
   return (
