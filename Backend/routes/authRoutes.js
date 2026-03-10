@@ -15,7 +15,7 @@ router.post("/forgot-password", async (req, res) => {
   if (!user) return res.status(400).json({ message: "User not found" });
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
-  const resetLink = `http://localhost:5173/reset-password/${token}`;
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -68,7 +68,7 @@ router.get('/google/callback',
   passport.authenticate('google', { session: false }),
   (req, res) => {
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
-    
+
     // Redirect to frontend with token
     res.redirect(`${process.env.FRONTEND_URL}/auth-success?token=${token}&user=${JSON.stringify(req.user)}`);
   }
