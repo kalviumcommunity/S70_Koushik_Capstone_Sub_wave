@@ -28,6 +28,7 @@ requiredEnvVars.forEach(varName => {
 });
 
 const app = express();
+app.set('trust proxy', 1); // Trust Render's reverse proxy for secure cookies
 
 // Middleware
 app.use(cors(corsOptions));
